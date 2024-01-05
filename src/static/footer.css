@@ -11,8 +11,9 @@
 }
 
 footer {
+    font-family: 'Poppins';
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     width: 100vw;
     height: 100px;
 
@@ -29,4 +30,11 @@ footer > .social-info {
 
 footer > .social-info .github-svg {
     width: 65px;
+}
+
+footer > .data-provided {
+    display: flex;
+    align-items: center;
+    margin: 0 40px;
+    gap: 17px;
 }
