@@ -36,5 +36,18 @@ footer > .data-provided {
     display: flex;
     align-items: center;
     margin: 0 40px;
-    gap: 17px;
+    gap: 10px;
+    font-size: 12px;
+}
+
+footer > .data-provided > a:nth-child(2) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+footer > .data-provided > p:nth-child(1) {
+    text-transform: capitalize;
+    color: whitesmoke;
+    font-weight: 400;
 }
