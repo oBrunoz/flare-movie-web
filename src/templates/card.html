@@ -5,7 +5,7 @@
         <img class="container-card-img" src="" alt="IMAGEM DO FILME">
     </div>
     <div class="card-text">
-        <h1 class="movie-title">LOREM (2024)</h1>
+        <h1 class="movie-title">{{api[0]['title']}} (2024)</h1>
         <div class="movie-facts">
             <p class="movie-age">16</p>
             <i class="fa-solid fa-circle"></i>
@@ -15,7 +15,7 @@
             <i class="fa-solid fa-circle"></i>
             <p class="movie-duration">2h 24m</p>
         </div>
-        <p class="movie-resume">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem fugiat dignissimos laudantium veniam aperiam molestias odio, alias saepe commodi, distinctio nobis quis consequuntur asperiores! Libero, possimus consequuntur. Nobis, aspernatur nostrum?</p>
+        <p class="movie-resume">{{api[0]['overview']}}</p>
         
     </div>
 </div>
