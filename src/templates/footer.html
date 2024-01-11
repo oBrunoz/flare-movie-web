@@ -1,9 +1,9 @@
 {% block body %}
     <div class="container-main-content">
-        {% for api in api['backdrop_path'] %}
+        {% for image_path in api %}
             <div class="card-context">
                 <div class="card-context-image">
-                    <img src="https://image.tmdb.org/t/p/original{{api}}" alt="">
+                    <img src="https://image.tmdb.org/t/p/original{{ image_path['poster_path'] }}" alt="">
                 </div>
             </div>
         {% endfor %}
