@@ -17,12 +17,15 @@ def getTrending(time_window='week', language='pt-BR', media_type='movie'):
     }
 
     URLS = {
-        'info': '/{media_type}/{time_window}?{language}&api_key='
+        'info': f'/{media_type}/{time_window}?language={language}&api_key='
     }
 
-    url_trending = f'{environ.get("GET_TRENDING")}{api_key}'
+    url_trending = f'{environ.get("GET_TRENDING")}{URLS["info"]}{api_key}'
     response = requests.get(url=url_trending, headers=headers)
     json_response = response.json()
+
+    print(url_trending)
+    print(response.json())
 
     if 'results' in json_response:
         results = json_response['results']
@@ -54,8 +57,8 @@ def getTrending(time_window='week', language='pt-BR', media_type='movie'):
             all_results.append(dict_response)
 
         return all_results
-
-    return None
+    else:
+        return response.json()
 
 def format_release_date(release_date):
     if release_date:
