@@ -5,6 +5,5 @@ from src.api.config import getTrending
 @app.route('/')
 def index():
     trendingResponse = getTrending()
-    # print(trendingResponse)
 
-    return render_template('home.html', api=trendingResponse[0])
+    return render_template('home.html', api=trendingResponse)
