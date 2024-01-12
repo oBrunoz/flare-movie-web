@@ -2,7 +2,25 @@
 
 :root {
     --dark-blue: #03001C;
+    --blue-title: #2662D9;
+}
 
+.content-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 130px;
+    margin-top: 30px;
+}
+
+.content-title > p {
+    font-family: 'Poppins';
+    font-weight: 600;
+    font-size: 2rem;
+    text-transform: uppercase;
+    -webkit-text-stroke: 1px;
+
+    color: var(--blue-title);
 }
 
 .container-main-content {
@@ -12,7 +30,7 @@
     justify-content: space-evenly;
     margin: auto;
     gap: 20px;
-    padding: 60px 60px;
+    padding: 60px 120px;
     grid-template-columns: repeat(5, 1fr);
 
     width: 100%;
@@ -68,17 +86,55 @@ footer>.data-provided>p:nth-child(1) {
     background-color: black;
     border-radius: 14px;
     margin-top: 10px;
-    border: 1px solid #03001c;
+    border: 1px solid var(--dark-blue);
     overflow: hidden;
 }
 
 .container-main-content>.card-context>.card-context-image {
+    width: min-content;
     height: 90%;
+    overflow: hidden;
+}
+
+.container-main-content>.card-context>.card-context-image > .card-content-details {
+    position: relative;
+    bottom: 100%;
+    padding: 0 15px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+.container-main-content>.card-context>.card-context-image > .card-content-details > h2 {
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 600;
+
+    color: white;
+}
+
+.container-main-content>.card-context>.card-context-image > .card-content-details > .p-media {
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 600;
+
+    color: var(--blue-title);
+}
+
+.container-main-content>.card-context>.card-context-image > .card-content-details > .p-details {
+    text-align: justify;
+    font-weight: 400;
+    
+    color: white;
 }
 
 .container-main-content>.card-context>.card-context-image > img {
-    width: 100%;
+    /* width: 100%; */
     height: 100%;
+    transition: transform 0.5s ease-in-out, filter 0.5s ease-in-out;
 }
 
 .container-main-content>.card-context>.card-context-image > p {
@@ -88,9 +144,19 @@ footer>.data-provided>p:nth-child(1) {
     font-weight: 500;
 }
 
-.container-main-content>.card-context>.card-context-image:hover > img {
+.container-main-content>.card-context>.card-context-image > img:hover {
     cursor: pointer;
     filter: blur(2px);
+    transform: scale(1.1);
+}
+
+.container-main-content>.card-context>.card-context-image > img:hover + .card-content-details {
+    opacity: 1;
+}
+
+.container-main-content>.card-context>.card-context-image > img:not(:hover) {
+    filter: blur(0);
+    transform: scale(1);
 }
 
 .container-main-content>.card-context>.card-context-image:hover > p{
@@ -151,14 +217,8 @@ footer>.data-provided>p:nth-child(1) {
     top: calc(100% + 1em);
 }
 
-.container-main-content>.card-context>.card-context-btn > .card-btn:hover::before,
-.container-main-content>.card-context>.card-context-btn > .card-btn:hover::after {
-    height: 410px;
-    width: 410px;
-}
-
 .container-main-content>.card-context>.card-context-btn > .card-btn:hover {
-    color: var(--dark-blue);
+    color: green;
 }
 
 .container-main-content>.card-context>.card-context-btn > .card-btn:hover > svg {
