@@ -42,3 +42,202 @@
     flex-direction: row;
     gap: 10px;
 }
+
+.container-main-content>.card-context {
+    width: fit-content;
+    height: 350px;
+    background-color: black;
+    border-radius: 14px;
+    margin-top: 10px;
+    border: 1px solid var(--dark-blue);
+    overflow: hidden;
+}
+
+.container-main-content>.card-context>.card-context-image {
+    /* width: min-content; */
+    height: 90%;
+    max-height: 342px;
+    overflow: hidden;
+}
+
+.container-main-content>.card-context>.card-context-image > .card-content-details {
+    position: relative;
+    bottom: 100%;
+    height: inherit;
+    padding: 0 15px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    gap: 6px;
+
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1s ease;
+}
+
+.container-main-content>.card-context>.card-context-image > .card-content-details > h2 {
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 600;
+
+    color: white;
+}
+
+.container-main-content>.card-context>.card-context-image > .card-content-details > .content-date-vote {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    font-weight: 600;
+    margin: 0 0 8px;
+
+    color: white;
+}
+
+.container-main-content>.card-context>.card-context-image > .card-content-details > .content-date-vote > .p-media {
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 600;
+
+    color: var(--blue-title);
+}
+
+.container-main-content>.card-context>.card-context-image > .card-content-details > .p-details {
+    text-align: justify;
+    font-weight: 400;
+    
+    color: white;
+}
+
+.container-main-content>.card-context>.card-context-image > img {
+    width: 100%;
+    height: 100%;
+    transition: transform 0.5s ease-in-out, filter 0.5s ease-in-out, opacity .5s;
+}
+
+.container-main-content>.card-context>.card-context-image > p {
+    position: relative;
+    bottom: 0;
+    color: black;
+    font-weight: 500;
+}
+
+.container-main-content>.card-context>.card-context-image:hover > img {
+    cursor: pointer;
+    filter: blur(2px);
+    transform: scale(1.1);
+    opacity: 0.4;
+
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Adiciona uma sombra ao hover */
+}
+
+.container-main-content>.card-context>.card-context-image:hover > img + .card-content-details {
+    opacity: 1;
+}
+
+.container-main-content>.card-context>.card-context-image:not(:hover) > img {
+    filter: blur(0);
+    transform: scale(1);
+}
+
+.container-main-content>.card-context>.card-context-image:hover > p{
+    bottom: 66%;
+    transition: 0.5s all ease-in-out;
+}
+
+.container-main-content>.card-context>.card-context-btn {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+    height: 10%;
+}
+
+.container-main-content>.card-context>.card-context-btn > .card-btn {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    cursor: pointer;
+    background-color: transparent;
+    width: 30px;
+    height: 30px;
+    font-weight: 500;
+    font-size: 17px;
+    border: 1px solid;
+    border-radius: 20px;
+    transition: ease-out .1s linear;
+    
+    fill: whitesmoke;
+    color: var(--dark-blue);
+    z-index: 1;
+}
+
+.container-main-content>.card-context>.card-context-btn > .card-btn::before,
+.container-main-content>.card-context>.card-context-btn > .card-btn::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 50px;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    border-radius: 50%;
+    z-index: -1;
+    background-color: var(--dark-blue);
+    transition: 1s ease;
+}
+
+.container-main-content>.card-context>.card-context-btn > .card-btn::before {
+    top: -1em;
+    left: -1em;
+}
+
+.container-main-content>.card-context>.card-context-btn > .card-btn::after {
+    left: calc(100% + 1em);
+    top: calc(100% + 1em);
+}
+
+.container-main-content>.card-context>.card-context-btn > .card-btn:hover {
+    color: green;
+}
+
+.container-main-content>.card-context>.card-context-btn > .card-btn:hover > svg {
+    transition: all .5s;
+    fill: green;
+}
+
+.container-main-content>.card-context>.card-context-btn > .card-btn:active {
+    filter: brightness(.8);
+}
+
+.container-main-content > .card-context > .card-context-image > .card-content-details > p {
+    font-family: 'Ubuntu';
+    text-align: justify;
+    font-size: 15px;
+    font-weight: 400;
+
+    color: white;
+}
+
+.container-main-content > .card-context > .card-context-image > .card-content-details > .content-genre-details {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    bottom: 5px;
+    width: 100%;
+    gap: 10px;
+    margin-top: auto;
+
+    color: white;
+}
+
+.container-main-content > .card-context > .card-context-image > .card-content-details > .content-genre-details > p {
+    background: var(--dark-grey);
+    padding: 0 8px;
+    font-size: 14px;
+    border-radius: 20px;
+    font-weight: bold;
+    border: 1.5px solid var(--dark-blue);
+}
