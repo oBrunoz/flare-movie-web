@@ -5,60 +5,14 @@ import requests
 
 load_dotenv(find_dotenv(filename='.env'))
 api_key = environ.get('API_KEY')
-languages = {
-    'portuguese': 'pt-BR',
-    'english': 'en-US',
+
+if not api_key:
+    raise ValueError('API key not found in env.')
+
+headers = {
+    'Accept': 'application/json',
+    'Authorization': api_key
 }
-
-def getTrending(time_window='week', language='pt-BR', media_type='movie'):
-    headers = {
-        'Accept': 'application/json',
-        'Authorization': api_key,
-    }
-
-    URLS = {
-        'info': f'/{media_type}/{time_window}?language={language}&api_key='
-    }
-
-    url_trending = f'{environ.get("GET_TRENDING")}{URLS["info"]}{api_key}'
-    response = requests.get(url=url_trending, headers=headers)
-    json_response = response.json()
-
-    print(url_trending)
-    print(response.json())
-
-    if 'results' in json_response:
-        results = json_response['results']
-
-        all_results = []
-
-        for result in results:
-            release_date = result.get('release_date')
-            date_format = format_release_date(release_date)
-
-            dict_response = {
-                'adult': result.get('adult'),
-                'backdrop_path': result.get('backdrop_path'),
-                'id': result.get('id'),
-                'title': result.get('title'),
-                'original_language': result.get('original_language'),
-                'original_title': result.get('original_title'),
-                'overview': result.get('overview'),
-                'poster_path': result.get('poster_path'),
-                'media_type': result.get('media_type'),
-                'genre_ids': result.get('genre_ids'),
-                'popularity': result.get('popularity'),
-                'release_date': date_format,
-                'video': result.get('video'),
-                'vote_average': result.get('vote_average'),
-                'vote_count': result.get('vote_count'),
-            }
-
-            all_results.append(dict_response)
-
-        return all_results
-    else:
-        return response.json()
 
 def format_release_date(release_date):
     if release_date:
@@ -69,3 +23,8 @@ def format_release_date(release_date):
             return release_date
 
     return None
+
+def truncate_text(text:str, max_length:int=120):
+    if len(text) > max_length:
+        return f'{text[:max_length]} ...'
+    return text
