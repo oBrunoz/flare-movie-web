@@ -18,4 +18,40 @@
         <p class="movie-resume" style="text-align: justify;">{{api[2]['overview']}}</p>
     </div>
 </div>
+<div class="content-title">
+    <p>Em alta na semana</p>
+</div>
+<div class="container-main-content">
+    {% for image_path in api %}
+        <div class="card-context">
+            <div class="card-context-image">
+                <img src="https://image.tmdb.org/t/p/original{{ image_path['poster_path'] }}" alt="">
+                <div class="card-content-details">
+                    <h2>{{ image_path['title'] }}</h2>
+                    <div class="content-date-vote">
+                        <p class="p-media">{{ image_path['media_type'] }}</p>
+                        <p><i class="fa-solid fa-star" style="color: #FFD43B;"></i> {{ image_path['vote_average'] }}</p>
+                    </div>
+                    <p>{{ image_path['overview'] }}</p>
+                    <div class="content-genre-details">
+                        {% for genre in image_path['genre_ids'] %}
+                            <p class="p-details">{{ genre }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="card-context-btn">
+                <button class="card-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/></svg>
+                </button>
+                <button class="card-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/></svg>
+                </button>
+                <button class="card-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/></svg>
+                </button>
+            </div>
+        </div>
+    {% endfor %}
+</div>
 {% endblock %}
