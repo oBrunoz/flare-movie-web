@@ -44,18 +44,20 @@
 }
 
 .container-main-content>.card-context {
-    width: fit-content;
-    height: 350px;
+    width: 250px;
+    /* height: 350px; */
     background-color: black;
     border-radius: 14px;
-    margin-top: 10px;
+    margin: 0 35px;
     border: 1px solid var(--dark-blue);
     overflow: hidden;
+
+    min-width: 224px;
 }
 
 .container-main-content>.card-context>.card-context-image {
     /* width: min-content; */
-    height: 90%;
+    height: 100%;
     max-height: 342px;
     overflow: hidden;
 }
@@ -63,11 +65,10 @@
 .container-main-content>.card-context>.card-context-image > .card-content-details {
     position: relative;
     bottom: 100%;
-    height: inherit;
-    padding: 0 15px;
+    height: 100%;
+    padding: 0 15px 10px;
     display: flex;
     flex-direction: column;
-    margin-top: 20px;
     gap: 6px;
 
     opacity: 0;
