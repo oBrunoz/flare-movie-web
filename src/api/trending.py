@@ -4,7 +4,7 @@ from src.api.genre import getGenreID
 
 import requests
 
-def getTrending(time_window:str='week', language:str='pt-BR', media_type:str='movie'):
+def getTrending(time_window:str='week', language:str='pt-BR', media_type:str='movie', max_text_length:int=120):
     URLS = {
         'info': f'/{media_type}/{time_window}?language={language}&api_key='
     }
@@ -32,7 +32,7 @@ def getTrending(time_window:str='week', language:str='pt-BR', media_type:str='mo
                 'title': result.get('title'),
                 'original_language': result.get('original_language'),
                 'original_title': result.get('original_title'),
-                'overview': truncate_text(result.get('overview')),
+                'overview': truncate_text(result.get('overview'), max_text_length),
                 'poster_path': result.get('poster_path'),
                 'media_type': result.get('media_type'),
                 'genre_ids': genre_names,
