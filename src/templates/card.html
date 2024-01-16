@@ -25,7 +25,7 @@
     {% for image_path in api %}
         <div class="card-context">
             <div class="card-context-image">
-                <img src="https://image.tmdb.org/t/p/original{{ image_path['poster_path'] }}" alt="">
+                <a href="{{ url_for('movie', media_type=image_path['media_type'], media_id=image_path['id']) }}"><img src="https://image.tmdb.org/t/p/original{{ image_path['poster_path'] }}" alt="{{ api['title'] }}"></a>
                 <div class="card-content-details">
                     <h2>{{ image_path['title'] }}</h2>
                     <div class="content-date-vote">
