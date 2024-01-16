@@ -10,6 +10,7 @@
     font-weight: 300;
     display: flex;
     width: 100%;
+    padding-top: 92px;
     
     background-color: black;
     box-shadow: #01000be0 0 3px 29px;
@@ -20,7 +21,7 @@
     width: 50%;
     height: 100%;
 
-    margin-top: 91px;
+    /* margin-top: 91px; */
 }
 
 .container-card > .card-text {
@@ -32,7 +33,7 @@
     height: auto;
     color: whitesmoke;
 
-    margin-top: 91px;
+    /* margin-top: 91px; */
     gap: 10px;
     padding: 2%;
 }
@@ -110,7 +111,7 @@
     color: white;
 }
 
-.container-main-content>.card-context>.card-context-image > img {
+.container-main-content>.card-context>.card-context-image > a > img {
     width: 100%;
     height: 100%;
     transition: transform 0.5s ease-in-out, filter 0.5s ease-in-out, opacity .5s;
@@ -123,7 +124,7 @@
     font-weight: 500;
 }
 
-.container-main-content>.card-context>.card-context-image:hover > img {
+.container-main-content>.card-context>.card-context-image:hover > a > img {
     cursor: pointer;
     filter: blur(2px);
     transform: scale(1.1);
@@ -132,16 +133,16 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Adiciona uma sombra ao hover */
 }
 
-.container-main-content>.card-context>.card-context-image:hover > img + .card-content-details {
+.container-main-content>.card-context>.card-context-image:hover > a + .card-content-details {
     opacity: 1;
 }
 
-.container-main-content>.card-context>.card-context-image:not(:hover) > img {
+.container-main-content>.card-context>.card-context-image:not(:hover) > a > img {
     filter: blur(0);
     transform: scale(1);
 }
 
-.container-main-content>.card-context>.card-context-image:hover > p{
+.container-main-content>.card-context>.card-context-image:hover > p {
     bottom: 66%;
     transition: 0.5s all ease-in-out;
 }

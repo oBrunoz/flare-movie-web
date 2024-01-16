@@ -41,6 +41,11 @@
 }
 
 footer {
+    position: relative;
+    bottom: 0;
+}
+
+footer > .container-footer {
     font-family: 'Poppins';
     margin-top: 4rem;
     display: flex;
@@ -51,7 +56,7 @@ footer {
     background: rgb(2, 4, 12);
 }
 
-footer>.social-info {
+footer > .container-footer > .social-info {
     display: flex;
     gap: 50px;
     margin: 0 75px;
@@ -59,11 +64,11 @@ footer>.social-info {
     align-content: space-between;
 }
 
-footer>.social-info .github-svg {
+footer > .container-footer > .social-info .github-svg {
     width: 50px;
 }
 
-footer>.data-provided {
+footer > .container-footer > .data-provided {
     display: flex;
     align-items: center;
     margin: 0 60px;
@@ -71,13 +76,13 @@ footer>.data-provided {
     font-size: 12px;
 }
 
-footer>.data-provided>a:nth-child(2) {
+footer > .container-footer > .data-provided>a:nth-child(2) {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-footer>.data-provided>p:nth-child(1) {
+footer > .container-footer > .data-provided>p:nth-child(1) {
     text-transform: capitalize;
     color: whitesmoke;
     font-weight: 400;
