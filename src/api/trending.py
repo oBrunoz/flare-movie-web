@@ -6,10 +6,10 @@ import requests
 
 def getTrending(time_window:str='week', language:str='pt-BR', media_type:str='movie', max_text_length:int=120):
     URLS = {
-        'info': f'/{media_type}/{time_window}?language={language}&api_key='
+        'trending_media': f'/{media_type}/{time_window}?language={language}&api_key='
     }
 
-    url_trending = f'{environ.get("GET_TRENDING")}{URLS["info"]}{api_key}'
+    url_trending = f'{environ.get("GET_TRENDING")}{URLS["trending_media"]}{api_key}'
     response = requests.get(url=url_trending, headers=headers).json()
 
     if 'results' in response:

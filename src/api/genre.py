@@ -18,10 +18,10 @@ def getGenreID(genre_id:list, media_type:str, language:str='pt') -> list:
 
     id_list = []
     URLS = {
-        'info': f'/{media_type}/list?language={language}&api_key='
+        'genre_url': f'/{media_type}/list?language={language}&api_key='
     }
 
-    url_genre = f'{environ.get("GET_GENRE_MOVIE_LIST")}{URLS["info"]}{api_key}'
+    url_genre = f'{environ.get("GET_GENRE_MOVIE_LIST")}{URLS["genre_url"]}{api_key}'
     response = requests.get(url=url_genre, headers=headers).json()['genres']
 
     for genre_data in response:
@@ -29,7 +29,5 @@ def getGenreID(genre_id:list, media_type:str, language:str='pt') -> list:
             id_list.append(genre_data['name'])
         else:
             pass
-
-    # print('reponse: ', response[0])
 
     return id_list
