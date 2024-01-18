@@ -29,18 +29,36 @@
 
 .movie-container-card > .movie-image-banner > .movie-card-details {
     position: absolute;
+    flex-direction: column;
     display: flex;
-    justify-content: start;
-    align-items: center;
+    justify-content: flex-start;
     left: 0;
-    padding-left: 64px;
+    padding-left: 4rem;
+    padding-right: 36rem;
 
     background: linear-gradient(to right, var(--dominantColor) 0%, var(--dominantColor) 45%, rgba(3, 0, 28, 0) 100%, transparent);
     color: white;
     width: 75%;
     height: 42rem;
+    gap: 30px;
 }
 
-.movie-container-card > .movie-image-banner > .movie-card-details > h1 {
+.movie-container-card > .movie-image-banner > .movie-card-details > .media-detailed {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    width: 85%;
+    margin-top: 60px;
+}
+
+.movie-container-card > .movie-image-banner > .movie-card-details > .media-detailed > h1 {
+    text-align: center;
     font-size: 3rem;
+    margin-top: 40px;
+}
+
+.movie-container-card > .movie-image-banner > .movie-card-details > .media-detailed > p {
+    font-size: 1.2rem;
+    font-weight: 400;
 }

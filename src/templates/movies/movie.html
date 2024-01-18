@@ -4,10 +4,14 @@
     <div class="movie-container-card">
         <div class="movie-image-banner">
             <div class="movie-image">
-                <img class="banner-image" src="https://image.tmdb.org/t/p/original/{{ media_metadata['backdrop_path'] }}" alt="">
+                <img class="banner-image" src="https://image.tmdb.org/t/p/original/{{ media_metadata['backdrop_path'] }}" alt="{{ media_metadata['title'] }}">
             </div>
             <div class="movie-card-details">
-                <h1>{{ media_metadata['title'] }}</h1>
+                <div class="media-detailed">
+                    <img src="https://image.tmdb.org/t/p/original/{{media_metadata['logo_path']}}" alt="" width="60%">
+                    <h1>{{ media_metadata['title'] }}</h1>
+                    <p>{{ media_metadata['tagline'] }}</p>
+                </div>
             </div>
         </div>
     </div>
