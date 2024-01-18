@@ -13,11 +13,12 @@ headers = {
     'Authorization': api_key
 }
 
-def format_release_date(release_date):
+def format_release_date(release_date) -> list:
     if release_date:
         try:
             date_format = datetime.strptime(str(release_date), '%Y-%m-%d').strftime('%d/%m/%Y')
-            return date_format
+            year_format = datetime.strptime(str(release_date), '%Y-%m-%d').strftime('%Y')
+            return date_format, year_format
         except ValueError:
             return release_date
 
