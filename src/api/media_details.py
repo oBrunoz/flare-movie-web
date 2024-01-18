@@ -1,8 +1,43 @@
 from os import environ
-from src.api.config import api_key, headers, format_release_date, truncate_text
+from src.api.config import api_key, headers, format_release_date
+from random import randrange
 import requests
 
-def getMediaDetails(media_id:int, media_type:str, language:str='pt-BR') -> dict:
+
+def getMediaImages(media_id:int, media_type:str, language:str='en', get_random_backdrop:bool=False) -> list:
+    URLS = {
+        'image_details': f'/{media_type}/{media_id}/images?language={language}&api_key='
+    }
+
+    url_media_detail = f'{environ.get("GET_MEDIA_IMAGES")}{URLS["image_details"]}{api_key}'
+
+    try:
+        response = requests.get(url=url_media_detail, headers=headers)
+        response.raise_for_status()
+        data = response.json()
+
+        backdrop_file_paths = [item['file_path'] for item in data['backdrops']]
+        logo_file_paths = [item['file_path'] for item in data['logos']]
+
+        if get_random_backdrop and backdrop_file_paths:
+            random_index = randrange(len(backdrop_file_paths))
+            random_backdrop_path = backdrop_file_paths[random_index]
+
+            print(random_backdrop_path)
+
+            return random_backdrop_path, logo_file_paths
+
+        return backdrop_file_paths, logo_file_paths
+
+
+    except requests.exceptions.RequestException as e:
+        print(f'Error fetching media images: {e}')
+        return None, None
+    except Exception as e:
+        print(f'An expected error has ocurred. Error detail: {e}')
+
+
+def getMediaDetails(media_id: int, media_type: str, language: str = 'pt-BR') -> dict:
     URLS = {
         'media_details': f'/{media_type}/{media_id}?language={language}&api_key='
     }
@@ -10,9 +45,13 @@ def getMediaDetails(media_id:int, media_type:str, language:str='pt-BR') -> dict:
     url_media_detail = f'{environ.get("GET_MEDIA_DETAILS")}{URLS["media_details"]}{api_key}'
     response = requests.get(url=url_media_detail, headers=headers).json()
 
+    random_image_path, _ = getMediaImages(media_id, media_type, get_random_backdrop=True)
+
+    print(random_image_path)
+
     media_details = {
         'adult': response.get('adult', False),
-        'backdrop_path': response.get('backdrop_path', ''),
+        'backdrop_path': random_image_path,
         'belongs_to_collection': response.get('belongs_to_collection', None),
         'budget': response.get('budget', 0),
         'genres': [{'id': genre['id'], 'name': genre['name']} for genre in response.get('genres', [])],

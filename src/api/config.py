@@ -1,7 +1,6 @@
 from os import environ
 from dotenv import load_dotenv, find_dotenv
 from datetime import datetime
-import requests
 
 load_dotenv(find_dotenv(filename='.env'))
 api_key = environ.get('API_KEY')
