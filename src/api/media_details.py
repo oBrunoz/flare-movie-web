@@ -15,7 +15,7 @@ def getMediaImages(media_id:int, media_type:str, language:str='en', get_random_b
         response = requests.get(url=url_media_detail, headers=headers)
         response.raise_for_status()
         data = response.json()
-
+        print(data)
         backdrop_file_paths = [item['file_path'] for item in data['backdrops']]
         logo_file_paths = [item['file_path'] for item in data['logos']]
 
@@ -23,12 +23,9 @@ def getMediaImages(media_id:int, media_type:str, language:str='en', get_random_b
             random_index = randrange(len(backdrop_file_paths))
             random_backdrop_path = backdrop_file_paths[random_index]
 
-            print(random_backdrop_path)
-
             return random_backdrop_path, logo_file_paths
 
         return backdrop_file_paths, logo_file_paths
-
 
     except requests.exceptions.RequestException as e:
         print(f'Error fetching media images: {e}')
@@ -45,13 +42,12 @@ def getMediaDetails(media_id: int, media_type: str, language: str = 'pt-BR') -> 
     url_media_detail = f'{environ.get("GET_MEDIA_DETAILS")}{URLS["media_details"]}{api_key}'
     response = requests.get(url=url_media_detail, headers=headers).json()
 
-    random_image_path, _ = getMediaImages(media_id, media_type, get_random_backdrop=True)
-
-    print(random_image_path)
+    random_image_path, logo_image_path = getMediaImages(media_id, media_type, get_random_backdrop=True)
 
     media_details = {
         'adult': response.get('adult', False),
-        'backdrop_path': random_image_path,
+        'backdrop_path': response.get('backdrop_path', None),
+        'logo_path': logo_image_path[0] if logo_image_path is not None else None,
         'belongs_to_collection': response.get('belongs_to_collection', None),
         'budget': response.get('budget', 0),
         'genres': [{'id': genre['id'], 'name': genre['name']} for genre in response.get('genres', [])],
@@ -71,10 +67,13 @@ def getMediaDetails(media_id: int, media_type: str, language: str = 'pt-BR') -> 
         'spoken_languages': [{'english_name': lang['english_name'], 'iso_639_1': lang['iso_639_1'], 'name': lang['name']} for lang in response.get('spoken_languages', [])],
         'status': response.get('status', ''),
         'tagline': response.get('tagline', ''),
-        'title': response.get('title', ''),
+        'title': response.get('title') if response.get('title') is not None else response.get('name'),
         'video': response.get('video', False),
         'vote_average': response.get('vote_average', 0.0),
         'vote_count': response.get('vote_count', 0),
     }
+
+    print('media details: ', media_details)
+    print(random_image_path)
 
     return media_details
