@@ -1,5 +1,5 @@
 from os import environ
-from src.api.config import api_key, headers, format_release_date
+from src.api.config import api_key, headers, format_release_date, convert_minutes_to_hours
 from random import randrange
 import requests
 
@@ -15,7 +15,7 @@ def getMediaImages(media_id:int, media_type:str, language:str='en', get_random_b
         response = requests.get(url=url_media_detail, headers=headers)
         response.raise_for_status()
         data = response.json()
-        print(data)
+
         backdrop_file_paths = [item['file_path'] for item in data['backdrops']]
         logo_file_paths = [item['file_path'] for item in data['logos']]
 
@@ -47,7 +47,7 @@ def getMediaDetails(media_id: int, media_type: str, language: str = 'pt-BR') -> 
     media_details = {
         'adult': response.get('adult', False),
         'backdrop_path': response.get('backdrop_path', None),
-        'logo_path': logo_image_path[0] if logo_image_path is not None else None,
+        'logo_path': logo_image_path[0] if logo_image_path and len(logo_image_path) > 0 else None,
         'belongs_to_collection': response.get('belongs_to_collection', None),
         'budget': response.get('budget', 0),
         'genres': [{'id': genre['id'], 'name': genre['name']} for genre in response.get('genres', [])],
@@ -64,16 +64,14 @@ def getMediaDetails(media_id: int, media_type: str, language: str = 'pt-BR') -> 
         'release_date': format_release_date(response.get('release_date', '')),
         'revenue': response.get('revenue', 0),
         'runtime': response.get('runtime', 0),
+        'runtime_hour': convert_minutes_to_hours(response.get('runtime')),
         'spoken_languages': [{'english_name': lang['english_name'], 'iso_639_1': lang['iso_639_1'], 'name': lang['name']} for lang in response.get('spoken_languages', [])],
         'status': response.get('status', ''),
         'tagline': response.get('tagline', ''),
         'title': response.get('title') if response.get('title') is not None else response.get('name'),
         'video': response.get('video', False),
-        'vote_average': response.get('vote_average', 0.0),
+        'vote_average': round(response.get('vote_average'), 1) if response.get('vote_average') else None,
         'vote_count': response.get('vote_count', 0),
     }
-
-    print('media details: ', media_details)
-    print(random_image_path)
 
     return media_details
