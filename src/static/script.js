@@ -1,4 +1,5 @@
 const posterImage = document.querySelector('.banner-image');
+const logoImage = document.querySelector('.logo-image');
 const colorThief = new ColorThief();
 
 function extractDominantColor(image) {
@@ -9,38 +10,50 @@ function convertToRGBColor(colorArray) {
     return `rgb(${colorArray.join(', ')})`;
 }
 
-function applyDynamicColor(rgbColor) {
-    document.documentElement.style.setProperty('--dominantColor', rgbColor);
+function applyDynamicColor(rgbColor, variableName) {
+    document.documentElement.style.setProperty(variableName, rgbColor);
 }
 
-function applyDefaultColor() {
-    const defaultColor = localStorage.getItem('dynamicColor') || 'rgb(3, 0, 28)';
-    document.documentElement.style.setProperty('--dominantColor', defaultColor);
+function applyDefaultColor(variableName, defaultValue) {
+    const defaultColor = localStorage.getItem(variableName) || defaultValue;
+    document.documentElement.style.setProperty(variableName, defaultColor);
 }
 
-function saveDynamicColor(rgbColor) {
-    localStorage.setItem('dynamicColor', rgbColor);
+function saveDynamicColor(rgbColor, variableName) {
+    localStorage.setItem(variableName, rgbColor);
 }
 
-const image = new Image();
-image.crossOrigin = 'Anonymous';
-image.src = posterImage.src;
+const posterImageObj = new Image();
+posterImageObj.crossOrigin = 'Anonymous';
+posterImageObj.src = posterImage.src;
 
-if (image.complete) {
+const logoImageObj = new Image();
+logoImageObj.crossOrigin = 'Anonymous';
+logoImageObj.src = logoImage.src;
+
+if (posterImageObj.complete && logoImageObj.complete) {
     handleImageLoad();
 } else {
-    applyDefaultColor();
-    image.addEventListener('load', handleImageLoad);
+    applyDefaultColor('--dominantColor', 'rgb(3, 0, 28)');
+    applyDefaultColor('--dominantColorLogo', 'rgb(3, 0, 28)'); // Valor padrão para a cor do logo
+    posterImageObj.addEventListener('load', handleImageLoad);
+    logoImageObj.addEventListener('load', handleImageLoad);
 }
 
 window.addEventListener('beforeunload', () => {
-    saveDynamicColor(getComputedStyle(document.documentElement).getPropertyValue('rgb(3, 0, 28)'));
+    saveDynamicColor(getComputedStyle(document.documentElement).getPropertyValue('--dominantColor'), '--dominantColor');
+    saveDynamicColor(getComputedStyle(document.documentElement).getPropertyValue('--dominantColorLogo'), '--dominantColorLogo');
 });
 
 function handleImageLoad() {
-    const dominantColor = extractDominantColor(image);
+    const dominantColor = extractDominantColor(posterImageObj);
     const rgbColor = convertToRGBColor(dominantColor);
-    console.log(rgbColor);
-    applyDynamicColor(rgbColor);
-    saveDynamicColor(rgbColor);
+    applyDynamicColor(rgbColor, '--dominantColor');
+    saveDynamicColor(rgbColor, '--dominantColor');
+    
+    const logoDominantColor = extractDominantColor(logoImageObj);
+    const rgbLogoColor = convertToRGBColor(logoDominantColor);
+    applyDynamicColor(rgbLogoColor, '--dominantColorLogo');
+    saveDynamicColor(rgbLogoColor, '--dominantColorLogo');
+    console.log(rgbColor, rgbLogoColor)
 }
