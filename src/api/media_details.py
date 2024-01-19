@@ -3,13 +3,27 @@ from src.api.config import api_key, headers, format_release_date, convert_minute
 from random import randrange
 import requests
 
+def getWatchProviders(media_id:int, media_type:str):
+    URLS = {
+        'watch_providers': f'/{media_type}/{media_id}/watch/providers'
+    }
+
+    url_media_provider = f'{environ.get("GET_BASE_URL")}'
+
+    try:
+        response = requests.get(url=url_media_provider, headers=headers)
+        response.raise_for_status()
+        data = response.json()
+
+    except Exception as e:
+        print(e)
 
 def getMediaImages(media_id:int, media_type:str, language:str='en', get_random_backdrop:bool=False) -> list:
     URLS = {
         'image_details': f'/{media_type}/{media_id}/images?language={language}&api_key='
     }
 
-    url_media_detail = f'{environ.get("GET_MEDIA_IMAGES")}{URLS["image_details"]}{api_key}'
+    url_media_detail = f'{environ.get("GET_BASE_URL")}{URLS["image_details"]}{api_key}'
 
     try:
         response = requests.get(url=url_media_detail, headers=headers)
@@ -73,5 +87,7 @@ def getMediaDetails(media_id: int, media_type: str, language: str = 'pt-BR') -> 
         'vote_average': round(response.get('vote_average'), 1) if response.get('vote_average') else None,
         'vote_count': response.get('vote_count', 0),
     }
+
+    print('Media Details: ', media_details)
 
     return media_details

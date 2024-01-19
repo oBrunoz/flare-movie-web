@@ -239,7 +239,7 @@
     color: white;
 }
 
-.container-main-content > .card-context > .card-context-image > .card-content-details > .content-genre-details > p {
+.container-main-content > .card-context > .card-context-image > .card-content-details > .content-genre-details > .p-details {
     background: var(--dark-grey);
     padding: 0 8px;
     font-size: 14px;

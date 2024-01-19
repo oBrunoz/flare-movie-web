@@ -54,7 +54,7 @@
     margin-right: auto;
     gap: 14px;
 
-    color: var(--dominantColorLogo);
+    color: var(--text-color);
 }
 
 .movie-container-card > .movie-image-banner > .movie-card-details > .media-detailed > h1 {
@@ -80,6 +80,6 @@
 .movie-container-card > .movie-image-banner > .movie-card-details > .media-detailed > .media-detailed-overview {
     width: fit-content;
     text-align: justify;
-    font-size: 1.2rem;
+    font-size: 1rem;
     font-weight: 400;
 }

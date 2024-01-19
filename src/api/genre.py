@@ -17,10 +17,10 @@ def getGenreID(genre_ids:list, media_type:str, language:str='pt') -> list:
     """
 
     URLS = {
-        'genre_url': f'/{media_type}/list?language={language}&api_key='
+        'genre_url': f'genre/{media_type}/list?language={language}&api_key='
     }
 
-    url_genre = f'{environ.get("GET_GENRE_MOVIE_LIST")}{URLS["genre_url"]}{api_key}'
+    url_genre = f'{environ.get("GET_BASE_URL")}{URLS["genre_url"]}{api_key}'
     response = requests.get(url=url_genre, headers=headers).json()
 
     # Constrói um dicionário que mapeia IDs de gênero para nomes de gênero

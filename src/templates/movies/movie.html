@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% block title %}{{ media_metadata['title'] }} • {{super()}}{% endblock %}
 
 {% block body %}
     <div class="movie-container-card">
@@ -9,10 +10,24 @@
             <div class="movie-card-details">
                 <div class="media-detailed">
                     <img class="logo-image" src="https://image.tmdb.org/t/p/original/{{media_metadata['logo_path']}}" alt="" width="60%">
-                    <h1>{{ media_metadata['title']}} ({{ media_metadata['release_date'][1] }})</h1>
+                    <h1>{{ media_metadata['title']}} {% if media_metadata['release_date'][1] %} ({{ media_metadata['release_date'][1] }}) {% endif %}</h1>
+                    <div class="media-genre" style="display: flex; flex-direction: row; width: 100%; justify-content: center; gap: 35px;">
+                        {% for item in media_metadata['genres'] %}
+                            {% if item %}
+                                <p class="p-details" style="background: var(--dominantColorLogo);
+                                padding: 0 8px;
+                                font-size: 14px;
+                                border-radius: 20px;
+                                font-weight: bold;
+                                border: 1.5px solid var(--text-color);">{{ item['name'] }}</p>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
                     <p>{{ media_metadata['tagline'] }}</p>
                     <div class="media-detailed-info">
                         <p><i class="fa-solid fa-star" style="color: #FFD43B;"></i> {{ media_metadata['vote_average'] }}</p>
+                        <i class="fa-solid fa-circle"></i>
+                        <p>{{ media_metadata['status'] }}</p>
                         <i class="fa-solid fa-circle"></i>
                         <p style="text-transform: uppercase;">{{ media_metadata['original_language'] }}</p>
                         <i class="fa-solid fa-circle"></i>
@@ -20,8 +35,15 @@
                         <i class="fa-solid fa-circle"></i>
                         <p>{{ media_metadata['release_date'][0] }}</p>
                     </div>
-                    <div class="media-detailed-overview" style="width: fit-content; text-align: justify; font-size: 1.2rem; font-weight: 400;">
+                    <div class="media-detailed-overview">
                         <p>{{ media_metadata['overview'] }}</p>
+                    </div>
+                    <div class="media-production-companies" style="display: flex; flex-direction: row; justify-content: right; width: 100%; gap: 25px; align-items: center;">
+                        {% for item in media_metadata['production_companies'] %}
+                            {% if item['logo_path'] %}
+                                <img src="https://image.tmdb.org/t/p/original/{{item['logo_path']}}" alt="{{item['name']}}" width="5%" style="background-color: var(--text-color); border-radius: 100%;">
+                            {% endif %}
+                        {% endfor %}
                     </div>
                 </div>
             </div>
