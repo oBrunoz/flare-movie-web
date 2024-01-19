@@ -8,9 +8,21 @@
             </div>
             <div class="movie-card-details">
                 <div class="media-detailed">
-                    <img src="https://image.tmdb.org/t/p/original/{{media_metadata['logo_path']}}" alt="" width="60%">
-                    <h1>{{ media_metadata['title'] }}</h1>
+                    <img class="logo-image" src="https://image.tmdb.org/t/p/original/{{media_metadata['logo_path']}}" alt="" width="60%">
+                    <h1>{{ media_metadata['title']}} ({{ media_metadata['release_date'][1] }})</h1>
                     <p>{{ media_metadata['tagline'] }}</p>
+                    <div class="media-detailed-info">
+                        <p><i class="fa-solid fa-star" style="color: #FFD43B;"></i> {{ media_metadata['vote_average'] }}</p>
+                        <i class="fa-solid fa-circle"></i>
+                        <p style="text-transform: uppercase;">{{ media_metadata['original_language'] }}</p>
+                        <i class="fa-solid fa-circle"></i>
+                        <p>{{ media_metadata['runtime_hour'] }}</p>
+                        <i class="fa-solid fa-circle"></i>
+                        <p>{{ media_metadata['release_date'][0] }}</p>
+                    </div>
+                    <div class="media-detailed-overview" style="width: fit-content; text-align: justify; font-size: 1.2rem; font-weight: 400;">
+                        <p>{{ media_metadata['overview'] }}</p>
+                    </div>
                 </div>
             </div>
         </div>
