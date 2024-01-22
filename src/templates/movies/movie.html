@@ -9,7 +9,7 @@
             </div>
             <div class="movie-card-details">
                 <div class="media-detailed">
-                    <img class="logo-image" src="https://image.tmdb.org/t/p/original/{{media_metadata['logo_path']}}" alt="" width="60%">
+                    <img class="logo-image" src="https://image.tmdb.org/t/p/original/{{media_metadata['logo_path']}}" alt="" width="40%">
                     <h1>{{ media_metadata['title']}} {% if media_metadata['release_date'][1] %} ({{ media_metadata['release_date'][1] }}) {% endif %}</h1>
                     <div class="media-genre">
                         {% for item in media_metadata['genres'] %}
@@ -44,7 +44,28 @@
             </div>
         </div>
     </div>
-    <div class="movie-container-informations">
-        movie informations come here
+    <div class="container-media-informations" style="background: var(--dominantColor); height: 1440px; padding-top: 25px; color: white;">
+        <div class="media-informations" style="display: flex; justify-content: space-between; width: 100%; background: var(--dominantColor); height: 50%; overflow: hidden; box-shadow: 0 4px 55px #0000005c;">
+            <div class="media-youtube-trailer" style="height: 100%;
+            width: 30%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0px 25px;">
+                <img src="https://image.tmdb.org/t/p/original/{{media_metadata['poster_path']}}" alt="" style="width: 100%; border-radius: 20px;">
+            </div>
+            <div class="media-general-info" style="width: 100%; margin-top: 65px; margin-bottom: 65px; padding-right: 15rem;">
+                <h3>Diretor</h3>
+                <p>Christopher Nolan</p>
+
+                <div class="media-cast-scroller">
+                    <div class="media-card-cast">
+                        <div class="media-card-content">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}
