@@ -21,7 +21,11 @@ def convert_minutes_to_hours(minutes:int) -> str:
         time_delta = timedelta(minutes=minutes)
         hours, remainder = divmod(time_delta.seconds, 3600)
         minutes, _ = divmod(remainder, 60)
-        return f"{hours}h {minutes}min"
+        
+        if hours > 0:
+            return f"{hours}h {minutes}min"
+        else:
+            return f"{minutes}min"
 
 def format_release_date(release_date) -> list:
     if release_date:
