@@ -37,8 +37,9 @@ def getMediaImages(media_id:int, media_type:str, language:str='en', get_random_b
         response.raise_for_status()
         data = response.json()
 
-        backdrop_file_paths = [item['file_path'] for item in data['backdrops']]
-        logo_file_paths = [item['file_path'] for item in data['logos']]
+        
+        backdrop_file_paths = [item['file_path'] for item in data.get('backdrops')]
+        logo_file_paths = [item['file_path'] for item in data.get('logos')]
 
         if get_random_backdrop and backdrop_file_paths:
             random_index = randrange(len(backdrop_file_paths))
@@ -82,6 +83,7 @@ def getMediaDetails(media_id: int, media_type: str, language: str = 'pt-BR') -> 
             'overview': response.get('overview', ''),
             'popularity': response.get('popularity', 0.0),
             'poster_path': response.get('poster_path', ''),
+            'random_poster_path': random_image_path,
             'production_companies': [{'id': company['id'], 'logo_path': company['logo_path'], 'name': company['name'], 'origin_country': company['origin_country']} for company in response.get('production_companies', [])],
             'production_countries': [{'iso_3166_1': country['iso_3166_1'], 'name': country['name']} for country in response.get('production_countries', [])],
             'release_date': format_release_date(response.get('release_date', '')),
@@ -97,7 +99,7 @@ def getMediaDetails(media_id: int, media_type: str, language: str = 'pt-BR') -> 
             'vote_average': round(response.get('vote_average'), 1) if response.get('vote_average') else None,
             'vote_count': response.get('vote_count', 0),
         }
-        print(media_details['watch_providers'])
+        print(media_details)
         return media_details
 
     except requests.RequestException as error:
