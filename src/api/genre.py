@@ -17,19 +17,17 @@ def getGenreID(genre_ids:list, media_type:str, language:str='pt') -> list:
     """
 
     URLS = {
-        'genre_url': f'genre/{media_type}/list?language={language}&api_key='
+        'genre_url': f'/genre/{media_type}/list?language={language}&api_key='
     }
 
     url_genre = f'{environ.get("GET_BASE_URL")}{URLS["genre_url"]}{api_key}'
-    response = requests.get(url=url_genre, headers=headers).json()
+    response = requests.get(url=url_genre, headers=headers)
+    
+    response.raise_for_status()
+    data = response.json()
 
-    # Constrói um dicionário que mapeia IDs de gênero para nomes de gênero
-    genre_dict = {genre_data['id']: genre_data['name'] for genre_data in response['genres']}
-
-    # Obtém os nomes dos gêneros correspondentes aos IDs fornecidos
+    genre_dict = {genre_data['id']: genre_data['name'] for genre_data in data['genres']}
     genre_names = [genre_dict.get(genre_id) for genre_id in genre_ids]
-
-    # Remove valores None (IDs que não correspondem a nenhum gênero)
     genre_names = [name for name in genre_names if name is not None]
 
     return genre_names
