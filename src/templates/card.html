@@ -5,13 +5,15 @@
         <img class="container-card-img" width="100%" height="100%" src="https://image.tmdb.org/t/p/original{{api[2]['backdrop_path']}}" alt="{{api['title']}}">
     </div>
     <div class="card-text">
-        <h1 class="movie-title" style="text-align: center;">{{api[2]['title']}} ({{ api[2]['release_year'] }})</h1>
+        <h1 class="movie-title" style="text-align: center;">{{api[2]['title']}} {% if api[2]['release_year'] %} ({{ api[2]['release_year'] }}) {% endif %}</h1>
         <div class="movie-facts">
             <p class="movie-age">16</p>
             <i class="fa-solid fa-circle"></i>
             <p class="movie-date">{{api[2]['release_date']}} (BR)</p>
             <i class="fa-solid fa-circle"></i>
-            <p class="movie-type">Drama, História</p>
+            {% for item in api[2]['genre_ids'] %}
+                <p class="movie-type">{{ item }}</p>
+            {% endfor %}
             <i class="fa-solid fa-circle"></i>
             <p class="movie-duration">2h 24m</p>
         </div>
