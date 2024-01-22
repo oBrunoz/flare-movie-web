@@ -34,7 +34,7 @@
     justify-content: flex-start;
     left: 0;
     padding-left: 2rem;
-    padding-right: 36rem;
+    padding-right: 20rem;
 
     background: linear-gradient(to right, var(--dominantColor) 0%, var(--dominantColor) 45%, rgba(3, 0, 28, 0) 100%, transparent);
     color: white;
@@ -47,8 +47,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    
+
     width: auto;
+    max-height: 38rem;
     max-width: 80%;
     margin-top: 60px;
     margin-right: auto;
@@ -78,8 +79,40 @@
 }
 
 .movie-container-card > .movie-image-banner > .movie-card-details > .media-detailed > .media-detailed-overview {
+    max-height: 180px;
+    overflow: auto;
     width: fit-content;
     text-align: justify;
     font-size: 1rem;
     font-weight: 400;
+}
+
+.movie-container-card > .movie-image-banner > .movie-card-details > .media-detailed > .media-genre {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+    gap: 20px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.movie-container-card > .movie-image-banner > .movie-card-details > .media-detailed > .media-genre > .p-details {
+    background: var(--dominantColorLogo);
+    text-align: center;
+    padding: 0 8px;
+    font-size: 14px;
+    border-radius: 20px;
+    font-weight: bold;
+    border: 1.5px solid var(--text-color);
+}
+
+.movie-container-card > .movie-image-banner > .movie-card-details > .media-detailed > .media-production-companies {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    gap: 25px;
+    align-items: center;
+    margin: 0 0 5px;
 }
