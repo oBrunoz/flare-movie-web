@@ -12,7 +12,7 @@ function extractPaletteColor(image) {
 
 function getConstrast(rgbColor) {
     const luminance = (0.299 * rgbColor[0] + 0.587 * rgbColor[1] + 0.114 * rgbColor[2]) / 255;
-    return luminance > 0.5 ? "black" : "white";
+    return luminance > 0.3 ? "black" : "white";
 }
 
 function convertToRGBColor(colorArray) {
@@ -56,33 +56,41 @@ window.addEventListener('beforeunload', () => {
 
 function handleImageLoad() {
     const dominantColor = extractDominantColor(posterImageObj);
-    if(dominantColor) {
+    if (dominantColor) {
         const rgbColor = convertToRGBColor(dominantColor);
         applyDynamicColor(rgbColor, '--dominantColor');
         saveDynamicColor(rgbColor, '--dominantColor');
-    } else {
-        console.log('else')
-        const defaultColor = 'rgb(0, 0, 0)';
-        applyDynamicColor(defaultColor);
-        saveDynamicColor(defaultColor);
-    }
-    
-    const logoDominantColor = extractDominantColor(logoImageObj);
-    const rgbLogoColor = convertToRGBColor(logoDominantColor);
-    applyDynamicColor(rgbLogoColor, '--dominantColorLogo');
-    saveDynamicColor(rgbLogoColor, '--dominantColorLogo');
-
-    // Aplicar cor de texto baseado na cor de fundo
-    try {
-        const textColor = getConstrast(dominantColor);
-        if(textColor){
-            document.documentElement.style.setProperty('--text-color', textColor);
-            console.log('TEXT COLOR: '+ textColor)
-            console.log(rgbColor, rgbLogoColor)
-        } else {
-            document.documentElement.style.setProperty('--text-color', 'rgb(0,0,0)')
+        
+        // Aplicar cor de texto baseado na cor de fundo
+        try {
+            const textColor = getConstrast(dominantColor);
+            if (textColor) {
+                document.documentElement.style.setProperty('--text-color', textColor);
+                console.log('TEXT COLOR: ' + textColor);
+                console.log(rgbColor);
+            } else {
+                document.documentElement.style.setProperty('--text-color', 'rgb(0,0,0)');
+            }
+        } catch (error) {
+            console.error('Error getting color contrast: ', error);
         }
-    } catch(error) {
-        console.error('Error getting color contrast: ', error);
+    } else {
+        console.log('Dominant color is null. Using default color.');
+        const defaultColor = 'rgb(0, 0, 0)';
+        applyDynamicColor(defaultColor, '--dominantColor');
+        saveDynamicColor(defaultColor, '--dominantColor');
+        document.documentElement.style.setProperty('--text-color', 'rgb(0,0,0)');
+    }
+
+    const logoDominantColor = extractDominantColor(logoImageObj);
+    if (logoDominantColor) {
+        const rgbLogoColor = convertToRGBColor(logoDominantColor);
+        applyDynamicColor(rgbLogoColor, '--dominantColorLogo');
+        saveDynamicColor(rgbLogoColor, '--dominantColorLogo');
+    } else {
+        console.log('Logo dominant color is null. Using default color.');
+        const defaultLogoColor = 'rgb(0, 0, 0)';
+        applyDynamicColor(defaultLogoColor, '--dominantColorLogo');
+        saveDynamicColor(defaultLogoColor, '--dominantColorLogo');
     }
 }
