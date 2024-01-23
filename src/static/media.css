@@ -53,6 +53,7 @@
     width: auto;
     max-height: 38rem;
     max-width: 80%;
+    min-width: 50%;
     margin-top: 60px;
     margin-right: auto;
     gap: 14px;
@@ -61,6 +62,7 @@
 }
 
 .movie-container-card > .movie-image-banner > .movie-card-details > .media-detailed > h1 {
+    width: 100%;
     text-align: center;
     font-size: 2rem;
     margin-top: 40px;
@@ -117,4 +119,44 @@
     gap: 25px;
     align-items: center;
     margin: 0 0 5px;
+}
+
+.container-media-informations {
+    height: 1440px;
+    padding-top: 25px;
+    color: white;
+    background-color: var(--dominantColor);
+}
+
+.container-media-informations > .media-cast-scroller {
+    display: flex;
+    overflow: auto;
+    position: relative;
+    height: fit-content;
+    flex-direction: row;
+    padding: 21px 35px;
+    gap: 20px;
+    bottom: 0px;
+    box-shadow: 0px 0px 9px black;
+
+    background: var(--dark-grey);
+}
+
+.container-media-informations > .media-cast-scroller > .media-card-cast {
+    width: fit-content;
+    min-width: fit-content;
+    height: fit-content;
+    overflow: hidden;
+    border-radius: 8px;
+    background-color: var(--dominantColorLogo);
+}
+
+.container-media-informations > .media-cast-scroller > .media-card-cast > .media-card-text {
+    display: flex;
+    justify-content: center;
+    color: var(--text-color);
+}
+
+.container-media-informations > .media-cast-scroller > .media-card-cast > .media-card-text > :first-child {
+    font-weight: bold;
 }
