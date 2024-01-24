@@ -122,10 +122,17 @@
 }
 
 .container-media-informations {
+    font-family: 'Poppins';
+    font-size: .8rem;
     height: 1440px;
     padding-top: 25px;
-    color: white;
+    color: var(--text-color);
     background-color: var(--dominantColor);
+}
+
+.container-media-informations > .media-general-info > .media-general-text > div {
+    flex: 0 0 48%;
+
 }
 
 .container-media-informations > .media-cast-scroller {
@@ -135,7 +142,7 @@
     height: fit-content;
     flex-direction: row;
     padding: 21px 35px;
-    gap: 20px;
+    gap: 35px;
     bottom: 0px;
     box-shadow: 0px 0px 9px black;
 
@@ -143,18 +150,26 @@
 }
 
 .container-media-informations > .media-cast-scroller > .media-card-cast {
-    width: fit-content;
-    min-width: fit-content;
-    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    min-width: fit-content; /*11.063rem*/
+    max-width: 260px;
     overflow: hidden;
     border-radius: 8px;
-    background-color: var(--dominantColorLogo);
+    box-shadow: 1px 0 11px #000000f0;
+    background-color: whitesmoke;
 }
 
 .container-media-informations > .media-cast-scroller > .media-card-cast > .media-card-text {
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    color: var(--text-color);
+    align-items: center;
+    min-width: 100%;
+    max-width: 17em;
+    height: 100%;
+    padding: 3px 10px;
+    color: black;
 }
 
 .container-media-informations > .media-cast-scroller > .media-card-cast > .media-card-text > :first-child {
