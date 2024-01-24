@@ -6,7 +6,6 @@ from src.api.media_details import getMediaDetails
 @app.route('/')
 def index():
     trendingResponse = getTrending(media_type='all', time_window='week')
-    print(trendingResponse)
 
     return render_template('home.html', api=trendingResponse)
 
