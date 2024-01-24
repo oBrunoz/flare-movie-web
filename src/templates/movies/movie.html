@@ -44,40 +44,55 @@
             </div>
         </div>
     </div>
-    <div class="container-media-informations" style="background: var(--dominantColor); height: 1440px; padding-top: 25px; color: white;">
-        <div class="media-informations" style="display: flex; justify-content: space-between; width: 100%; background: var(--dominantColor); height: fit-content; overflow: hidden; box-shadow: 0 4px 55px #0000005c; margin-bottom: 25px; padding: 20px 50px;">
+    <div class="container-media-informations">
+        <div class="media-informations" style="display: flex; justify-content: space-between; width: 100%; background: var(--dominantColor); height: fit-content; overflow: hidden; box-shadow: 0px 0px 9px #0000005c; margin-bottom: 25px; padding: 20px 50px;">
             <div class="media-youtube-trailer" style="height: fit-content;
             display: flex;
             justify-content: center;
             margin: 0px 25px;">
-                <img src="https://image.tmdb.org/t/p/original/{{media_metadata['poster_path']}}" alt="" style="width: 400px; border-radius: 20px; height: 600px; box-shadow: 1px 6px 17px #000000a3">
+                <img src="https://image.tmdb.org/t/p/original/{{media_metadata['poster_path']}}" alt="" style="width: 400px; border-radius: 20px; height: 600px; box-shadow: 1px 6px 17px #000000a3;">
             </div>
             <div class="media-general-info" style="width: 100%; display: flex; justify-content: space-between;">
-                <div class="media-general-text" style="margin-top: 89px; margin-bottom: 89px;">
-                    <h3>Data de Lançamento</h3>
-                    <p>15/07/2000</p>
-                    <h3>Diretor</h3>
-                    <p>Christopher Nolan</p>
-                    <h3>Receita</h3>
-                    <p>10000000</p>
-                    <h3>Orçamento</h3>
-                    <p>150000000</p>
+                <div class="media-general-text" style="display: flex; flex-wrap: wrap; margin-top: 89px; margin-bottom: 89px; justify-content: space-between;">
+                    <div>
+                        <h3>Data de Lançamento</h3>
+                        <p>15/07/2000</p>
+                    </div>
+                    <div>
+                        <h3>Diretor</h3>
+                        <p>Christopher Nolan</p>
+                    </div>
+                    <div>
+                        <h3>Receita</h3>
+                        <p>10000000</p>
+                    </div>
+                    <div>
+                        <h3>Orçamento</h3>
+                        <p>150000000</p>
+                    </div>
                 </div>
-                <div class="youtube-trailer" style="display: flex; justify-content: center; align-items: center; margin: 0 25px;">
-                    <iframe width="853" height="480" style="border: 1px solid black; border-radius: 25px;" src="https://www.youtube.com/embed/9DEOJkmZLd8?autoplay=1&controls=1&rel=0&showinfo=0" frameborder="0" allow='autoplay' allowfullscreen></iframe>
+                <div class="youtube-trailer" style="display: flex; flex-direction: column; justify-content: center; align-items: center; margin: 0 25px; gap: 25px;">
+                    <h2 style="font-family: 'Ubuntu'; text-transform: uppercase;">{{ media_metadata['video']['name'] }}</h2>
+                    <iframe width="853" height="480" style="border: 1px solid black; border-radius: 25px;" src="{{ media_metadata['video']['youtube_link'] }}" frameborder="0" allow='autoplay' allowfullscreen></iframe>
                 </div>
             </div>
         </div>
         <div class="media-cast-scroller">
-            <div class="media-card-cast">
-                <div class="media-card-content">
-                    <img style="width: 177px;" src="https://media.themoviedb.org/t/p/original/eWjkPYeXxPhE2F9J3Ui6E9OWVXy.jpg">
+            {% for item in media_metadata['credits'] %}
+                <div class="media-card-cast">
+                    <div class="media-card-content" style="height: 260px;">
+                        {% if item['profile_path'] %}
+                            <img style="width: 100%; height: 260px; object-fit: cover; border-bottom: 1px solid var(--text-color);" src="https://media.themoviedb.org/t/p/original/{{item['profile_path']}}">
+                            {% else %}
+                            <img width="fit-content" height="100%" src="{{ url_for('static', filename='images/user-solid.svg') }}" alt="" style="padding: 23px; border-bottom: 1px solid black;">
+                        {% endif %}
+                    </div>
+                    <div class="media-card-text">
+                        <p>{{item['name']}}</p>
+                        <p>{{item['character']}}</p>
+                    </div>
                 </div>
-                <div class="media-card-text">
-                    <p>Emma Stone</p>
-                    <p>Bella Baxter</p>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
     <div class="container-media-similar">
