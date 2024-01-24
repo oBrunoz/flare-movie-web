@@ -1,26 +1,49 @@
 from os import environ
 from src.api.config import api_key, headers, format_release_date, convert_minutes_to_hours
+from src.api.watch_providers import getWatchProviders
 from random import randrange
 import requests
 
-def getWatchProviders(media_id:int, media_type:str, country:str='BR'):
+def getMediaVideos(media_id:int, media_type:str, language:str='pt'):
     URLS = {
-        'watch_providers': f'/{media_type}/{media_id}/watch/providers?api_key='
+        'media_videos': f'/{media_type}/{media_id}/videos?language={language}&api_key=',
+        'youtube': 'https://www.youtube.com/embed/'
     }
 
-    url_media_provider = f'{environ.get("GET_BASE_URL")}{URLS["watch_providers"]}{api_key}'
+    url_media_detail = f'{environ.get("GET_BASE_URL")}{URLS["media_videos"]}{api_key}'
 
     try:
-        response = requests.get(url=url_media_provider, headers=headers)
+        response = requests.get(url=url_media_detail, headers=headers)
+        response.raise_for_status()
+        data = response.json()
+        videos = []
+
+        if 'results' in data:
+            for video in data['results']:
+                video_name = video.get('name', 'Trailer')
+                video_key = video.get('key')
+
+                if video_key:
+                    youtube_link = f'{URLS["youtube"]}{video_key}'
+                    videos.append({'name': video_name, 'youtube_link': youtube_link})
+
+        return videos
+    except Exception as e:
+        print(e)
+
+def getMediaCredits(media_id:int, media_type:str):
+    URLS = {   
+        'media_details': f'/{media_type}/{media_id}/credits?api_key='
+    }
+
+    url_media_detail = f'{environ.get("GET_BASE_URL")}{URLS["media_details"]}{api_key}'
+
+    try:
+        response = requests.get(url=url_media_detail, headers=headers)
         response.raise_for_status()
         data = response.json()
 
-        if 'results' in data:
-            data_map = data['results'][country]
-
-            
-
-            return data['results'][country]
+        return data['cast']
 
     except Exception as e:
         print(e)
@@ -67,6 +90,9 @@ def getMediaDetails(media_id: int, media_type: str, language: str = 'pt-BR') -> 
 
         random_image_path, logo_image_path = getMediaImages(media_id, media_type, get_random_backdrop=True)
         providers = getWatchProviders(media_id, media_type)
+        media_credits = getMediaCredits(media_id, media_type)
+        media_videos = getMediaVideos(media_id, media_type)
+        print(media_videos)
 
         media_details = {
             'adult': response.get('adult', False),
@@ -98,8 +124,9 @@ def getMediaDetails(media_id: int, media_type: str, language: str = 'pt-BR') -> 
             'video': response.get('video', False),
             'vote_average': round(response.get('vote_average'), 1) if response.get('vote_average') else None,
             'vote_count': response.get('vote_count', 0),
+            'credits': media_credits,
+            'video': media_videos[0],
         }
-        print(media_details)
         return media_details
 
     except requests.RequestException as error:
