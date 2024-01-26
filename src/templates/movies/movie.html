@@ -27,8 +27,10 @@
                         <p style="text-transform: uppercase;">{{ media_metadata['original_language'] }}</p>
                         <i class="fa-solid fa-circle"></i>
                         <p>{{ media_metadata['release_date'][0] }}</p>
-                        <i class="fa-solid fa-circle"></i>
-                        <p>{{ media_metadata['runtime_hour'] }}</p>
+                        {% if media_metadata['runtime_hour'] %}
+                            <i class="fa-solid fa-circle"></i>
+                            <p>{{ media_metadata['runtime_hour'] }}</p>
+                        {% endif %}
                     </div>
                     <div class="media-detailed-overview">
                         <p>{{ media_metadata['overview'] }}</p>
@@ -53,14 +55,14 @@
                 <img src="https://image.tmdb.org/t/p/original/{{media_metadata['poster_path']}}" alt="" style="width: 400px; border-radius: 20px; height: 600px; box-shadow: 1px 6px 17px #000000a3;">
             </div>
             <div class="media-general-info" style="width: 100%; display: flex; justify-content: space-between;">
-                <div class="media-general-text" style="display: flex; flex-wrap: wrap; margin-top: 89px; margin-bottom: 89px; justify-content: space-between;">
+                <div class="media-general-text" style="width: 100%; display: grid; grid-template-columns: repeat(2, 1fr); margin-top: 84px; margin-bottom: 36px; gap: 30px;">
                     <div>
                         <h3>Data de Lançamento</h3>
-                        <p>15/07/2000</p>
+                        <p>{{media_metadata['release_date'][0]}}</p>
                     </div>
                     <div>
                         <h3>Diretor</h3>
-                        <p>Christopher Nolan</p>
+                        <p>{{media_metadata['director'][0]}}</p>
                     </div>
                     <div>
                         <h3>Receita</h3>
@@ -70,10 +72,20 @@
                         <h3>Orçamento</h3>
                         <p>150000000</p>
                     </div>
+                    <div>
+                        <h3>Orçamento</h3>
+                        <p>150000000</p>
+                    </div>
+                    <div>
+                        <h3>Orçamento</h3>
+                        <p>150000000</p>
+                    </div>
                 </div>
                 <div class="youtube-trailer" style="display: flex; flex-direction: column; justify-content: center; align-items: center; margin: 0 25px; gap: 25px;">
-                    <h2 style="font-family: 'Ubuntu'; text-transform: uppercase;">{{ media_metadata['video']['name'] }}</h2>
-                    <iframe width="853" height="480" style="border: 1px solid black; border-radius: 25px;" src="{{ media_metadata['video']['youtube_link'] }}" frameborder="0" allow='autoplay' allowfullscreen></iframe>
+                    {% if media_metadata['video']['youtube_link'] %}
+                        <h2 style="font-family: 'Ubuntu'; text-transform: uppercase;">{{ media_metadata['video']['name'] }}</h2>
+                        <iframe width="853" height="480" style="border: 1px solid black; border-radius: 25px;" src="{{ media_metadata['video']['youtube_link'] }}" frameborder="0" allow='autoplay' allowfullscreen></iframe>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -82,9 +94,13 @@
                 <div class="media-card-cast">
                     <div class="media-card-content" style="height: 260px;">
                         {% if item['profile_path'] %}
-                            <img style="width: 100%; height: 260px; object-fit: cover; border-bottom: 1px solid var(--text-color);" src="https://media.themoviedb.org/t/p/original/{{item['profile_path']}}">
-                            {% else %}
-                            <img width="fit-content" height="100%" src="{{ url_for('static', filename='images/user-solid.svg') }}" alt="" style="padding: 23px; border-bottom: 1px solid black;">
+                            <a href="">
+                                <img src="https://media.themoviedb.org/t/p/original/{{item['profile_path']}}">
+                            </a>
+                                {% else %}
+                            <a href="">
+                                <img width="fit-content" height="100%" src="{{ url_for('static', filename='images/user-solid.svg') }}" alt="" style="padding: 23px;">
+                            </a>
                         {% endif %}
                     </div>
                     <div class="media-card-text">
