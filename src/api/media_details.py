@@ -4,9 +4,9 @@ from src.api.watch_providers import getWatchProviders
 from random import randrange
 import requests
 
-def getMediaVideos(media_id:int, media_type:str, language:str='pt'):
+def getMediaVideos(media_id:int, media_type:str, language:str='pt-BR'):
     URLS = {
-        'media_videos': f'/{media_type}/{media_id}/videos?language={language}&api_key=',
+        'media_videos': f'/{media_type}/{media_id}/videos?language={language}&include_video_language=pt-BR,en&api_key=',
         'youtube': 'https://www.youtube.com/embed/'
     }
 
@@ -16,18 +16,34 @@ def getMediaVideos(media_id:int, media_type:str, language:str='pt'):
         response = requests.get(url=url_media_detail, headers=headers)
         response.raise_for_status()
         data = response.json()
-        videos = []
+        videos_pt = []
+        videos_en = []
 
         if 'results' in data:
             for video in data['results']:
                 video_name = video.get('name', 'Trailer')
                 video_key = video.get('key')
+                video_type = video.get('type')
+                video_iso = video.get('iso_639_1')
 
-                if video_key:
-                    youtube_link = f'{URLS["youtube"]}{video_key}'
-                    videos.append({'name': video_name, 'youtube_link': youtube_link})
-
-        return videos
+                if video_iso == 'pt':
+                    if video_type.lower() == 'trailer':
+                        if video_name.startswith("Trailer Oficial") or video_name.startswith("Oficial"):
+                            if video_key:
+                                youtube_link = f'{URLS["youtube"]}{video_key}'
+                                videos_pt.append({'name': video_name, 'youtube_link': youtube_link})
+                        else:
+                            if video_key:
+                                youtube_link = f'{URLS["youtube"]}{video_key}'
+                                videos_pt.append({'name': video_name, 'youtube_link': youtube_link})
+                elif video_iso == 'en':
+                    if video_type.lower() == 'trailer':
+                        if video_key:
+                            youtube_link = f'{URLS["youtube"]}{video_key}'
+                            videos_en.append({'name': video_name, 'youtube_link': youtube_link})
+        print(videos_pt)
+        print(videos_en)
+        return videos_pt, videos_en
     except Exception as e:
         print(e)
 
@@ -42,8 +58,32 @@ def getMediaCredits(media_id:int, media_type:str):
         response = requests.get(url=url_media_detail, headers=headers)
         response.raise_for_status()
         data = response.json()
+        data_cast = []
+        data_crew = []
+        director_crew = []
 
-        return data['cast']
+        if 'cast' in data:
+            for data_ in data['cast']:
+                cast_id = data_['id']
+                cast_name = data_['name']
+                cast_department = data_['known_for_department']
+                profile_path = data_['profile_path']
+                cast_character = data_['character']
+
+                data_cast.append({'id': cast_id, 'name': cast_name, 'known_for_department': cast_department, 'profile_path': profile_path, 'character': cast_character})
+        if 'crew' in data:
+            for data_ in data['crew']:
+                crew_id = data_['id']
+                crew_name = data_['name']
+                crew_department = data_['known_for_department']
+
+                if crew_department == 'Directing':
+                    director_crew.append(crew_name)
+                
+                data_crew.append({'id': crew_id, 'name': crew_name, 'department': crew_department})
+
+        print(data_cast, data_crew)
+        return data_cast, data_crew, director_crew
 
     except Exception as e:
         print(e)
@@ -90,9 +130,8 @@ def getMediaDetails(media_id: int, media_type: str, language: str = 'pt-BR') -> 
 
         random_image_path, logo_image_path = getMediaImages(media_id, media_type, get_random_backdrop=True)
         providers = getWatchProviders(media_id, media_type)
-        media_credits = getMediaCredits(media_id, media_type)
-        media_videos = getMediaVideos(media_id, media_type)
-        print(media_videos)
+        media_credits, media_credits_crew, director = getMediaCredits(media_id, media_type)
+        media_videos_pt, media_videos_en = getMediaVideos(media_id, media_type)
 
         media_details = {
             'adult': response.get('adult', False),
@@ -112,7 +151,7 @@ def getMediaDetails(media_id: int, media_type: str, language: str = 'pt-BR') -> 
             'random_poster_path': random_image_path,
             'production_companies': [{'id': company['id'], 'logo_path': company['logo_path'], 'name': company['name'], 'origin_country': company['origin_country']} for company in response.get('production_companies', [])],
             'production_countries': [{'iso_3166_1': country['iso_3166_1'], 'name': country['name']} for country in response.get('production_countries', [])],
-            'release_date': format_release_date(response.get('release_date', '')),
+            'release_date': format_release_date(response.get('release_date', response.get('first_air_date'))),
             'watch_providers': providers,
             'revenue': response.get('revenue', 0),
             'runtime': response.get('runtime', 0),
@@ -125,8 +164,12 @@ def getMediaDetails(media_id: int, media_type: str, language: str = 'pt-BR') -> 
             'vote_average': round(response.get('vote_average'), 1) if response.get('vote_average') else None,
             'vote_count': response.get('vote_count', 0),
             'credits': media_credits,
-            'video': media_videos[0],
+            'crew': media_credits_crew,
+            'director': director,
+            'video': media_videos_pt[0] if media_videos_pt else media_videos_en[0],
         }
+        print(media_details['director'])
+
         return media_details
 
     except requests.RequestException as error:
