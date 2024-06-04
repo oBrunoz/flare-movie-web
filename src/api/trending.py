@@ -1,6 +1,6 @@
 from os import environ
-from src.api.config import api_key, headers, format_release_date, truncate_text
-from src.api.genre import getGenreID
+from src.api.Config import api_key, headers, format_release_date, truncate_text
+from src.api.Genre import getGenreID
 
 import requests
 

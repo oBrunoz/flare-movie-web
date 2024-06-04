@@ -1,5 +1,5 @@
 from os import environ
-from src.api.config import api_key, headers
+from src.api.Config import api_key, headers
 import requests
 
 def getWatchProviders(media_id:int, media_type:str, country:str='BR'):

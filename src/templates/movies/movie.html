@@ -60,17 +60,23 @@
                         <h3>Data de Lançamento</h3>
                         <p>{{media_metadata['release_date'][0]}}</p>
                     </div>
+                    {% if media_metadata['director'] %}
                     <div>
                         <h3>Diretor</h3>
-                        <p>{{media_metadata['director'][0]}}</p>
+                        {% if media_metadata['director']|length >= 1 %}
+                            <p>{{media_metadata['director']['name']|join(', ')}}</p>
+                        {% else %}
+                            <p>{{media_metadata['director']}}</p>
+                        {% endif %}
                     </div>
+                    {% endif %}
                     <div>
                         <h3>Receita</h3>
-                        <p>10000000</p>
+                        <p>{{media_metadata['revenue']}}</p>
                     </div>
                     <div>
                         <h3>Orçamento</h3>
-                        <p>150000000</p>
+                        <p>{{media_metadata['budget']}}</p>
                     </div>
                     <div>
                         <h3>Orçamento</h3>
@@ -81,12 +87,13 @@
                         <p>150000000</p>
                     </div>
                 </div>
+                {% if media_metadata['video']['youtube_link'] %}
                 <div class="youtube-trailer" style="display: flex; flex-direction: column; justify-content: center; align-items: center; margin: 0 25px; gap: 25px;">
-                    {% if media_metadata['video']['youtube_link'] %}
-                        <h2 style="font-family: 'Ubuntu'; text-transform: uppercase;">{{ media_metadata['video']['name'] }}</h2>
+                        <h2 style="font-family: 'Ubuntu'; text-transform: uppercase;">Trailer Oficial</h2>
                         <iframe width="853" height="480" style="border: 1px solid black; border-radius: 25px;" src="{{ media_metadata['video']['youtube_link'] }}" frameborder="0" allow='autoplay' allowfullscreen></iframe>
-                    {% endif %}
+                        
                 </div>
+                {% endif %}
             </div>
         </div>
         <div class="media-cast-scroller">
