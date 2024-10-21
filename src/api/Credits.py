@@ -30,14 +30,15 @@ def getMediaCredits(media_id:int, media_type:str):
             for data_ in data['crew']:
                 crew_id = data_['id']
                 crew_name = data_['name']
-                crew_department = data_['job']
+                crew_department = data_['department']
+                crew_job = data_['job']
 
-                if crew_department == 'Director':
+                if crew_department == 'Directing' and crew_job == 'Director':
                     director_crew.append({'name': crew_name, 'job': crew_department})
                 
                 # data_crew.append({'id': crew_id, 'name': crew_name, 'department': crew_department})
 
-        print(director_crew)
+        print('Director crew: ', director_crew)
         return data_cast, data_crew, director_crew
 
     except Exception as e:

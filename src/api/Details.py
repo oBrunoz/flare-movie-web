@@ -21,7 +21,7 @@ def getMediaDetails(media_id: int, media_type: str, language: str = 'pt-BR') -> 
         media_videos_pt, media_videos_en = getMediaVideos(media_id, media_type)
         revenue_formated = '${:,.2f}'.format(response.get('revenue'))
         budget_formated = '${:,.2f}'.format(response.get('budget'))
-
+        print("AAAAAAAAAAAAA: ", director)
         media_details = {
             'adult': response.get('adult', False),
             'backdrop_path': response.get('backdrop_path', None),
@@ -55,7 +55,7 @@ def getMediaDetails(media_id: int, media_type: str, language: str = 'pt-BR') -> 
             'credits': media_credits,
             'crew': media_credits_crew,
             'director': director,
-            'video': media_videos_pt[0] if media_videos_pt else media_videos_en[0],
+            'video': media_videos_pt[0] if media_videos_pt else None,
         }
 
         return media_details

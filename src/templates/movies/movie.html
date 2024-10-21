@@ -62,11 +62,13 @@
                     </div>
                     {% if media_metadata['director'] %}
                     <div>
-                        <h3>Diretor</h3>
+                        <h3>Diretor(es)</h3>
                         {% if media_metadata['director']|length >= 1 %}
-                            <p>{{media_metadata['director']['name']|join(', ')}}</p>
+                            {% for item in media_metadata['director'] %}
+                                <p>{{item['name']}}</p>
+                            {% endfor %}
                         {% else %}
-                            <p>{{media_metadata['director']}}</p>
+                            <p>{{media_metadata['director'][0]['name']}}</p>
                         {% endif %}
                     </div>
                     {% endif %}
@@ -79,12 +81,12 @@
                         <p>{{media_metadata['budget']}}</p>
                     </div>
                     <div>
-                        <h3>Orçamento</h3>
-                        <p>150000000</p>
+                        <h3>Idioma Original</h3>
+                        <p>{{media_metadata['spoken_languages'][0]['english_name']}}</p>
                     </div>
                     <div>
-                        <h3>Orçamento</h3>
-                        <p>150000000</p>
+                        <h3>Avaliação dos usuários</h3>
+                        <p>{{media_metadata['vote_average']}}/10</p>
                     </div>
                 </div>
                 {% if media_metadata['video']['youtube_link'] %}
